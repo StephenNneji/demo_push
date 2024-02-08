@@ -17,6 +17,7 @@ jobs:
         wget https://github.com/RascalSoftware/RAT/releases/download/nightly/Linux.zip
         unzip Linux.zip
         rsync -av --exclude="*.mat" --exclude="interface/" --exclude="html/" --exclude="examples/" --exclude="*.dmr" --exclude=".gitignore" compile/fullCompile/codegen/lib/RATMain/ rat_source/
+        cd rat_source
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add -A
