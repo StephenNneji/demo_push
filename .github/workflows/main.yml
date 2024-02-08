@@ -7,21 +7,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    
-    - name: Checkout archive repo
+    - name: Checkout Source
       uses: actions/checkout@v4
       with:
-        repository: StephenNneji/demo_recv
-        path: RAT
-    - name: Build and Deploy Docs
+        ref: generated_source
+        path: rat_source
+    - name: Deploy Souce
       run: |
-        cd RAT
-        date > generated.txt
+        wget https://github.com/RascalSoftware/RAT/releases/download/nightly/Linux.zip
+        unzip Linux.zip
+        rsync -av --exclude="*.mat" --exclude="interface/" --exclude="html/" --exclude="examples/" --exclude="*.dmr" --exclude=".gitignore" compile/fullCompile/codegen/lib/RATMain/ rat_source/
         git config user.name github-actions
         git config user.email github-actions@github.com
-        git config --unset-all http.https://github.com/.extraheader
         git add -A
-        git commit -m "Publish Documentation" || true
+        git commit -m "Deploy Source Code" || true
         git push
