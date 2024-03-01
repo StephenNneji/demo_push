@@ -14,13 +14,8 @@ jobs:
         path: rat_source
     - name: Deploy Souce
       run: |
-        wget https://www.dropbox.com/scl/fi/nx99ggfqmxxaz6m322b8t/Linux.zip?rlkey=c4hr315g2itu8n9wy1db7wb7r --output-document "Linux.zip"
+        wget https://github.com/RascalSoftware/RAT/releases/download/nightly/Linux.zip
         unzip Linux.zip
-        rm -rf rat_source/*.c rat_source/*.cpp rat_source/*.h
-        rsync -av compile/fullCompile/cppDeploy/ rat_source/
+        rm -rf rat_source/*.c rat_source/*.cpp rat_source/*.h rat_source/*.hpp
         cd rat_source
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add -A
-        git commit -m "Deploy Source Code" || true
-        git push
+        ls
