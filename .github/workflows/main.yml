@@ -3,19 +3,46 @@ name: Build
 on:  
   push:
     branches: [ main ]
-jobs: 
-  build:
+jobs:
+ test:
     runs-on: ubuntu-latest
+ 
+    steps:
+    - name: Create cppDelopy
+      run: |
+        mkdir -p compile/fullCompile/cppDeploy/
+        cd compile/fullCompile/
+        wget https://www.dropbox.com/scl/fi/3a2vdeo96mmbvyruv83pv/cppDeploy.zip?rlkey=rs46ectg5ff6l2wk9i9945vcl --output-document "cppDeploy.zip"
+        unzip cppDeploy.zip -d cppDeploy
+        cd ../..
+    - name: Upload cppDelopy
+      uses: actions/upload-artifact@v4
+      with:
+        name: cppDeploy
+        path: compile/fullCompile/cppDeploy/ 
+    
+ build:
+    runs-on: ubuntu-latest
+    needs: [test]
     steps:
     - name: Checkout Source
       uses: actions/checkout@v3
       with:
         ref: generated_source
         path: rat_source
-    - name: Deploy Souce
+    - name: Get cppDeploy
+      uses: actions/download-artifact@v4
+      with:
+        name: cppDeploy
+    - name: Deploy Source
       run: |
-        wget https://github.com/RascalSoftware/RAT/releases/download/nightly/Linux.zip
-        unzip Linux.zip
+        unzip cppDeploy.zip
         rm -rf rat_source/*.c rat_source/*.cpp rat_source/*.h rat_source/*.hpp
+        rsync -av compile/fullCompile/cppDeploy/ rat_source/
         cd rat_source
-        ls
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add -A
+        git commit -m "Deploy Source Code" || true
+        git push
+
