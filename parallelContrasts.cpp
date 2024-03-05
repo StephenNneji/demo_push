@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // parallelContrasts.cpp
 //
@@ -20,7 +20,6 @@
 #include "rt_nonfinite.h"
 #include "coder_array.h"
 #include "coder_bounded_array.h"
-#include "omp.h"
 
 // Function Definitions
 namespace RAT
@@ -29,19 +28,19 @@ namespace RAT
   {
     namespace standardLayers
     {
-      void c_parallelContrasts(const c_struct_T *problemStruct, const cell_11
+      void parallelContrasts(const f_struct_T *problemStruct, const cell_11
         *problemCells, const struct2_T *controls, ::coder::array<real_T, 1U>
         &outSsubs, ::coder::array<real_T, 1U> &backgroundParams, ::coder::array<
         real_T, 1U> &qzshifts, ::coder::array<real_T, 1U> &scalefactors, ::coder::
         array<real_T, 1U> &bulkIns, ::coder::array<real_T, 1U> &bulkOuts, ::
         coder::array<real_T, 1U> &resolutionParams, ::coder::array<real_T, 1U>
-        &chis, ::coder::array<cell_wrap_20, 1U> &reflectivity, ::coder::array<
-        cell_wrap_20, 1U> &simulation, ::coder::array<cell_wrap_8, 1U>
-        &shiftedData, ::coder::array<cell_wrap_8, 1U> &layerSlds, ::coder::array<
-        cell_wrap_8, 1U> &sldProfiles, ::coder::array<cell_wrap_8, 1U>
+        &chis, ::coder::array<cell_wrap_8, 1U> &reflectivity, ::coder::array<
+        cell_wrap_8, 1U> &simulation, ::coder::array<cell_wrap_10, 1U>
+        &shiftedData, ::coder::array<cell_wrap_10, 1U> &layerSlds, ::coder::
+        array<cell_wrap_10, 1U> &sldProfiles, ::coder::array<cell_wrap_10, 1U>
         &allLayers, ::coder::array<real_T, 1U> &allRoughs)
       {
-        ::coder::array<cell_wrap_22, 2U> outParameterisedLayers;
+        ::coder::array<cell_wrap_19, 2U> outParameterisedLayers;
         ::coder::array<real_T, 2U> reflect;
         ::coder::array<real_T, 2U> resampledLayers;
         ::coder::array<real_T, 2U> shiftedDat;
@@ -49,15 +48,13 @@ namespace RAT
         ::coder::array<real_T, 2U> sldProfile;
         ::coder::array<real_T, 2U> thisContrastLayers_data;
         RATMainTLS *RATMainTLSThread;
-        real_T b_dv[2];
-        real_T b_dv1[2];
-        real_T dv2[2];
         real_T thisBackground;
         real_T thisBulkIn;
         real_T thisBulkOut;
         real_T thisChiSquared;
         real_T thisQzshift;
         real_T thisResol;
+        real_T thisRough;
         real_T thisScalefactor;
         real_T thisSsubs;
         int32_T thisContrastLayers_size[2];
@@ -72,7 +69,7 @@ namespace RAT
         boolean_T useImaginary;
         RATMainTLSThread = emlrtGetThreadStackData();
 
-        //  Standard Layers calculation paralelised over the outer loop
+        //  Standard Layers calculation parallelised over the outer loop.
         //  This is the main reflectivity calculation of the standard layers
         //  calculation type. It extracts the required parameters for the contrasts
         //  from the input arrays, then passes the main calculation to
@@ -110,6 +107,9 @@ namespace RAT
           outParameterisedLayers);
 
         //  Resample parameters if required
+        //  Substrate roughness is always first parameter for standard layers
+        thisRough = problemStruct->params[0];
+
         //  Loop over all the contrasts
         outSsubs.set_size(static_cast<int32_T>(problemStruct->numberOfContrasts));
         sldProfiles.set_size(static_cast<int32_T>
@@ -135,7 +135,7 @@ namespace RAT
 
 #pragma omp parallel \
  num_threads(omp_get_max_threads()) \
- private(RATMainTLSThread,sldProfile,reflect,simul,shiftedDat,resampledLayers,thisSsubs,thisChiSquared,thisContrastLayers_size,thisResol,thisBulkOut,thisBulkIn,thisScalefactor,thisQzshift,thisBackground,b_dv,b_dv1,dv2,loop_ub,b_i,b_loop_ub,i1) \
+ private(RATMainTLSThread,sldProfile,reflect,simul,shiftedDat,resampledLayers,thisSsubs,thisChiSquared,thisContrastLayers_size,thisResol,thisBulkOut,thisBulkIn,thisScalefactor,thisQzshift,thisBackground,i,loop_ub,b_i,b_loop_ub,i1) \
  firstprivate(thisContrastLayers_data)
 
         {
@@ -170,7 +170,6 @@ namespace RAT
 
             //  For the other parameters, we extract the correct ones from the input
             //  arrays
-            //  Substrate roughness is always first parameter for standard layers
             //  Now call the core layers reflectivity calculation
             //  In this case we are single cored, so we do not parallelise over
             //  points
@@ -178,19 +177,14 @@ namespace RAT
             thisContrastLayers_data.set
               (&RATMainTLSThread->f2.thisContrastLayers_data[0],
                thisContrastLayers_size[0], thisContrastLayers_size[1]);
-            b_dv[0] = problemCells->f3[i].f1[0];
-            b_dv[1] = problemCells->f3[i].f1[1];
-            b_dv1[0] = problemCells->f4[i].f1[0];
-            b_dv1[1] = problemCells->f4[i].f1[1];
-            dv2[0] = problemCells->f1[i].f1[0];
-            dv2[1] = problemCells->f1[i].f1[1];
-            coreLayersCalculation(thisContrastLayers_data, problemStruct->
-                                  params[0], problemStruct->geometry.data,
+            coreLayersCalculation(thisContrastLayers_data, thisRough,
+                                  problemStruct->geometry.data,
                                   problemStruct->geometry.size, thisBulkIn,
                                   thisBulkOut, problemStruct->resample[i],
                                   calcSld, thisScalefactor, thisQzshift,
                                   problemStruct->dataPresent[i],
-                                  problemCells->f2[i].f1, b_dv, b_dv1, dv2,
+                                  problemCells->f2[i].f1, problemCells->f3[i].f1,
+                                  problemCells->f4[i].f1, problemCells->f1[i].f1,
                                   thisBackground, thisResol,
                                   problemStruct->contrastBackgroundsType[i],
                                   static_cast<real_T>(nParams),
@@ -246,7 +240,7 @@ namespace RAT
             bulkIns[i] = thisBulkIn;
             bulkOuts[i] = thisBulkOut;
             resolutionParams[i] = thisResol;
-            allRoughs[i] = problemStruct->params[0];
+            allRoughs[i] = thisRough;
             loop_ub = resampledLayers.size(1);
             allLayers[i].f1.set_size(resampledLayers.size(0),
               resampledLayers.size(1));

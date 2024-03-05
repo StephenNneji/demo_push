@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // adaptPCR.h
 //
@@ -13,19 +13,20 @@
 // Include files
 #include "rtwtypes.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
 // Type Declarations
 namespace RAT
 {
-  struct struct13_T;
+  struct struct14_T;
 }
 
 // Function Declarations
 namespace RAT
 {
-  void adaptPCR(const struct13_T *DREAMPar, const ::coder::array<real_T, 2U> &CR,
+  void adaptPCR(const struct14_T *DREAMPar, const ::coder::array<real_T, 2U> &CR,
                 const real_T delta_tot_data[], const real_T lCRold_data[],
                 real_T pCR_data[], int32_T pCR_size[2], real_T lCR_data[],
                 int32_T lCR_size[2]);

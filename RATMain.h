@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // RATMain.h
 //
@@ -13,6 +13,7 @@
 // Include files
 #include "RATMain_types.h"
 #include "rtwtypes.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
@@ -21,8 +22,8 @@ namespace RAT
 {
   extern void RATMain(struct0_T *problemStruct, const cell_7 *problemCells,
                       const struct1_T *problemLimits, struct2_T *controls, const
-                      struct4_T *priors, struct5_T *contrastParams, cell_wrap_9
-                      resultCells[6], struct7_T *bayesResults);
+                      struct4_T *priors, struct5_T *result, struct8_T
+                      *bayesResults);
 }
 
 #endif

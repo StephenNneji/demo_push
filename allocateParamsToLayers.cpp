@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // allocateParamsToLayers.cpp
 //
@@ -21,7 +21,7 @@
 namespace RAT
 {
   void allocateParamsToLayers(const ::coder::array<real_T, 2U> &params, const ::
-    coder::array<cell_wrap_8, 1U> &layersDetails, ::coder::array<cell_wrap_22,
+    coder::array<cell_wrap_10, 1U> &layersDetails, ::coder::array<cell_wrap_19,
     2U> &outLayers)
   {
     real_T thisOutLayer_data[10];
@@ -34,15 +34,15 @@ namespace RAT
     //  parameter value from the parameters array into each layer in
     //  the 'outLayers' cell array
     i = layersDetails.size(0);
-    outLayers.set_size(1, layersDetails.size(0));
+    outLayers.set_size(1, static_cast<int32_T>(static_cast<int16_T>
+      (layersDetails.size(0))));
     for (int32_T b_i{0}; b_i < i; b_i++) {
       int32_T i1;
       int32_T n;
       n = coder::internal::intlength(layersDetails[b_i].f1.size(0),
         layersDetails[b_i].f1.size(1));
-      if (n - 1 >= 0) {
-        std::memset(&thisOutLayer_data[0], 0, static_cast<uint32_T>(n) * sizeof
-                    (real_T));
+      if (0 <= n - 1) {
+        std::memset(&thisOutLayer_data[0], 0, n * sizeof(real_T));
       }
 
       i1 = coder::internal::intlength(layersDetails[b_i].f1.size(0),

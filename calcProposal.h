@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // calcProposal.h
 //
@@ -13,20 +13,21 @@
 // Include files
 #include "rtwtypes.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
 // Type Declarations
 namespace RAT
 {
-  struct struct13_T;
+  struct struct14_T;
 }
 
 // Function Declarations
 namespace RAT
 {
   void calcProposal(const ::coder::array<real_T, 2U> &X, real_T CR_data[], const
-                    struct13_T *DREAMPar, const ::coder::array<real_T, 2U>
+                    struct14_T *DREAMPar, const ::coder::array<real_T, 2U>
                     &Table_gamma, const ::coder::array<real_T, 2U> &Par_info_min,
                     const ::coder::array<real_T, 2U> &Par_info_max, const char_T
                     Par_info_boundhandling_data[], const int32_T

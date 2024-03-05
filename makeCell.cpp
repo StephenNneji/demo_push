@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // makeCell.cpp
 //
@@ -18,7 +18,7 @@
 namespace RAT
 {
   void b_makeCell(real_T m, const real_T vals_data[], ::coder::array<
-                  cell_wrap_22, 2U> &x)
+                  cell_wrap_19, 2U> &x)
   {
     int32_T i;
 
@@ -29,23 +29,17 @@ namespace RAT
     i = static_cast<int32_T>(m);
     x.set_size(i, 2);
     for (int32_T b_i{0}; b_i < i; b_i++) {
-      real_T d;
-      real_T d1;
-      real_T d2;
-      d = vals_data[0];
-      d1 = vals_data[1];
-      d2 = vals_data[2];
       for (int32_T j{0}; j < 2; j++) {
         x[b_i + x.size(0) * j].f1.set_size(1, 3);
-        x[b_i + x.size(0) * j].f1[0] = d;
-        x[b_i + x.size(0) * j].f1[1] = d1;
-        x[b_i + x.size(0) * j].f1[2] = d2;
+        x[b_i + x.size(0) * j].f1[0] = vals_data[0];
+        x[b_i + x.size(0) * j].f1[1] = vals_data[1];
+        x[b_i + x.size(0) * j].f1[2] = vals_data[2];
       }
     }
   }
 
-  void b_makeCell(real_T m, const real_T vals_data[], ::coder::array<cell_wrap_8,
-                  2U> &x)
+  void b_makeCell(real_T m, const real_T vals_data[], ::coder::array<
+                  cell_wrap_10, 2U> &x)
   {
     int32_T i;
 
@@ -56,22 +50,18 @@ namespace RAT
     i = static_cast<int32_T>(m);
     x.set_size(i, 2);
     for (int32_T b_i{0}; b_i < i; b_i++) {
-      real_T d;
-      real_T d1;
-      real_T d2;
-      d = vals_data[0];
-      d1 = vals_data[1];
-      d2 = vals_data[2];
       for (int32_T j{0}; j < 2; j++) {
         x[b_i + x.size(0) * j].f1.set_size(1, 3);
-        x[b_i + x.size(0) * j].f1[0] = d;
-        x[b_i + x.size(0) * j].f1[x[b_i + x.size(0) * j].f1.size(0)] = d1;
-        x[b_i + x.size(0) * j].f1[x[b_i + x.size(0) * j].f1.size(0) * 2] = d2;
+        x[b_i + x.size(0) * j].f1[0] = vals_data[0];
+        x[b_i + x.size(0) * j].f1[x[b_i + x.size(0) * j].f1.size(0)] =
+          vals_data[1];
+        x[b_i + x.size(0) * j].f1[x[b_i + x.size(0) * j].f1.size(0) * 2] =
+          vals_data[2];
       }
     }
   }
 
-  void makeCell(cell_wrap_8 x[50])
+  void makeCell(cell_wrap_10 x[50])
   {
     //  Creates a m by n cell array and initialise each cell with given
     //  value
@@ -179,7 +169,7 @@ namespace RAT
     x[49].f1[0] = 1.0;
   }
 
-  void makeCell(real_T m, const real_T vals_data[], ::coder::array<cell_wrap_22,
+  void makeCell(real_T m, const real_T vals_data[], ::coder::array<cell_wrap_19,
                 2U> &x)
   {
     int32_T i;
@@ -198,7 +188,7 @@ namespace RAT
     }
   }
 
-  void makeCell(real_T m, const real_T vals_data[], ::coder::array<cell_wrap_8,
+  void makeCell(real_T m, const real_T vals_data[], ::coder::array<cell_wrap_10,
                 2U> &x)
   {
     int32_T i;

@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // RATMain_data.h
 //
@@ -22,15 +22,13 @@ namespace RAT
   extern uint32_T state[625];
   extern real_T verbose;
   extern real_T DEBUG;
-  extern real_T lastNchar;
-  extern boolean_T lastNchar_not_empty;
   extern real_T freq;
   extern boolean_T freq_not_empty;
-  extern omp_nest_lock_t RATMain_nestLockGlobal;
+  extern omp_nest_lock_t emlrtNestLockGlobal;
   extern const char_T cv[128];
+  extern const char_T cv1[9];
   extern const real_T dv[257];
   extern const real_T dv1[257];
-  extern const char_T cv1[9];
 }
 
 #endif

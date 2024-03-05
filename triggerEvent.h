@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // triggerEvent.h
 //
@@ -13,25 +13,29 @@
 // Include files
 #include "rtwtypes.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
 
 // Type Declarations
 namespace RAT
 {
-  struct cell_wrap_9;
+  struct struct5_T;
 }
 
 // Function Declarations
 namespace RAT
 {
+  void b_triggerEvent();
   void helper_not_empty_init();
-  void triggerEvent(const cell_wrap_9 data_f1[6], const ::coder::array<real_T,
-                    1U> &data_f2, const char_T data_f3_TF_data[], const int32_T
-                    data_f3_TF_size[2], const ::coder::array<real_T, 2U>
-                    &data_f3_resample, const ::coder::array<real_T, 2U>
-                    &data_f3_dataPresent, const char_T data_f3_modelType_data[],
-                    const int32_T data_f3_modelType_size[2]);
+  void triggerEvent(const struct5_T *varargin_1, const char_T
+                    varargin_2_TF_data[], const int32_T varargin_2_TF_size[2],
+                    const ::coder::array<real_T, 2U> &varargin_2_resample, const
+                    ::coder::array<real_T, 2U> &varargin_2_dataPresent, const
+                    char_T varargin_2_modelType_data[], const int32_T
+                    varargin_2_modelType_size[2]);
+  void triggerEvent();
+  void triggerEvent(real_T varargin_2);
   void triggerEvent_init();
 }
 

@@ -1,7 +1,7 @@
 //
 // Non-Degree Granting Education License -- for use at non-degree
-// granting, nonprofit, education, and research organizations only. Not
-// for commercial or industrial use.
+// granting, nonprofit, educational organizations only. Not for
+// government, commercial, or other organizational use.
 //
 // processCustomFunction.h
 //
@@ -11,11 +11,18 @@
 #define PROCESSCUSTOMFUNCTION_H
 
 // Include files
-#include "RATMain_types.h"
 #include "rtwtypes.h"
 #include "coder_array.h"
+#include "omp.h"
 #include <cstddef>
 #include <cstdlib>
+
+// Type Declarations
+namespace RAT
+{
+  struct cell_wrap_1;
+  struct cell_wrap_10;
+}
 
 // Function Declarations
 namespace RAT
@@ -30,7 +37,7 @@ namespace RAT
         2U> &bulkOut, const ::coder::array<real_T, 2U> &cCustFiles, real_T
         numberOfContrasts, const ::coder::array<cell_wrap_1, 2U> &customFiles,
         const ::coder::array<real_T, 2U> &params, boolean_T useImaginary, ::
-        coder::array<cell_wrap_8, 1U> &allLayers, ::coder::array<real_T, 1U>
+        coder::array<cell_wrap_10, 1U> &allLayers, ::coder::array<real_T, 1U>
         &allRoughs);
     }
   }
