@@ -36,6 +36,7 @@ jobs:
         name: cppDeploy
     - name: Deploy Source
       run: |
+        ls
         unzip cppDeploy.zip
         rm -rf rat_source/*.c rat_source/*.cpp rat_source/*.h rat_source/*.hpp
         rsync -av compile/fullCompile/cppDeploy/ rat_source/
