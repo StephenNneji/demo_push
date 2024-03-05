@@ -37,10 +37,8 @@ jobs:
         path: cppDeploy/
     - name: Deploy Source
       run: |
-        ls
-        unzip cppDeploy.zip
         rm -rf rat_source/*.c rat_source/*.cpp rat_source/*.h rat_source/*.hpp
-        rsync -av compile/fullCompile/cppDeploy/ rat_source/
+        rsync -av cppDeploy/ rat_source/
         cd rat_source
         git config user.name github-actions
         git config user.email github-actions@github.com
