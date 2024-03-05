@@ -34,6 +34,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: cppDeploy
+        path: cppDeploy/
     - name: Deploy Source
       run: |
         ls
